@@ -5,249 +5,265 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="الیپی فراتر از یک تیم توسعه‌دهنده است؛ ما معماران دنیای دیجیتال هستیم.">
     <link rel="icon" href="favicon.png">
-    <title>الیپی | نوآوری در هوش مصنوعی</title>
+    <title>الیپی | آینده هوش مصنوعی</title>
     
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.3/dist/font-face.css" rel="stylesheet" type="text/css" />
 
     <style>
         :root {
-            --primary-color: #00aaff;
-            --accent-color: #ffcc00;
-            --bg-color: #050505;
-            --card-bg: #111;
-            --text-color: #f0f0f0;
-            --animation-timing: cubic-bezier(0.25, 0.8, 0.25, 1); /* ایزینگ نرم برای حرکت‌ها */
-        }
-
-        /* انیمیشن گرادینت متحرک پس‌زمینه */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* انیمیشن ورود نرم عناصر */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --accent: #ffd700;
+            --bg-dark: #0a0a0a;
+            --glass: rgba(20, 20, 25, 0.7);
         }
 
         body {
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            /* پس‌زمینه گرادینت متحرک */
-            background: linear-gradient(-45deg, #0a0a0a, #141414, #001220, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradientBG 20s ease infinite; /* حرکت بسیار آرام پس زمینه */
-            color: var(--text-color);
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
             margin: 0;
             padding: 0;
-            line-height: 1.8;
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
         }
 
+        /* --- انیمیشن‌های پس‌زمینه (Orbs) --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: orbFloat 10s infinite alternate ease-in-out;
+        }
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: -50px;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: purple;
+            bottom: 10%;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- کانتینر اصلی شیشه‌ای --- */
         .container {
             max-width: 900px;
-            margin: 40px auto;
-            /* پس زمینه شیشه‌ای مانند */
-            background: rgba(20, 20, 20, 0.7);
-            backdrop-filter: blur(10px); /* تاری پس زمینه برای عمق */
+            margin: 50px auto;
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            
-            /* اعمال انیمیشن ورود روی کل کانتینر */
-            animation: fadeInUp 0.8s var(--animation-timing) forwards;
-        }
-
-        /* کلاس‌های کمکی برای تاخیر در انیمیشن ورود عناصر داخلی */
-        .anim-delay-1 { animation-delay: 0.2s; opacity: 0; animation: fadeInUp 0.8s var(--animation-timing) 0.2s forwards; }
-        .anim-delay-2 { animation-delay: 0.4s; opacity: 0; animation: fadeInUp 0.8s var(--animation-timing) 0.4s forwards; }
-        .anim-delay-3 { animation-delay: 0.6s; opacity: 0; animation: fadeInUp 0.8s var(--animation-timing) 0.6s forwards; }
-
-
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(0, 170, 255, 0.4);
-            letter-spacing: -1px;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            margin-top: 40px;
-            display: inline-block;
+            border-radius: 24px;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.1);
             position: relative;
-            transition: color 0.3s ease;
-        }
-        
-        /* خط زیرین متحرک برای تیترها */
-        h2::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            right: 0;
-            background-color: var(--accent-color);
-            transition: width 0.4s var(--animation-timing);
+            z-index: 1;
+            /* انیمیشن ورود */
+            animation: slideUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        a {
-            text-decoration: none;
-            display: inline-block;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        a:hover h2 {
-            color: var(--accent-color);
+        /* --- تیتر درخشان (Shimmering Text) --- */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #fff 20%, var(--primary) 40%, var(--primary) 60%, #fff 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
         }
-        
-        a:hover h2::after {
-            width: 100%;
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         p {
-            color: #ccc;
+            color: #ddd;
             font-size: 1.1rem;
+            line-height: 2;
             text-align: justify;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
         }
 
-        .intro-text:hover {
-            color: #fff;
-            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+        /* --- لینک‌ها و تیترهای بخش‌ها --- */
+        a { text-decoration: none; display: block; }
+        
+        .section-title {
+            color: var(--primary);
+            margin-top: 50px;
+            position: relative;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        
+        /* آیکون چشمک‌زن کنار تیتر */
+        .section-title::before {
+            content: '●';
+            color: var(--accent);
+            margin-left: 10px;
+            animation: blink 1.5s infinite;
         }
 
-        img {
-            display: block;
+        @keyframes blink {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--accent); }
+            50% { opacity: 0.3; }
+        }
+
+        /* --- تصاویر معلق (Levitating Images) --- */
+        .floating-img {
             width: 100%;
-            max-width: 800px;
-            margin: 30px auto;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            /* انیمیشن شناور همیشگی */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* تاخیر برای تصویر دوم تا هماهنگ نباشند */
+        .img-delay {
+            animation-delay: 3s; 
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+            50% { transform: translateY(-15px); box-shadow: 0 25px 50px rgba(0,210,255,0.2); }
+            100% { transform: translateY(0px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        }
+
+        /* --- لیست ویژگی‌ها با آیکون‌های متحرک --- */
+        .feature-box {
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            /* استفاده از ایزینگ نرم برای حرکت تصویر */
-            transition: transform 0.5s var(--animation-timing), filter 0.5s ease, box-shadow 0.5s ease;
-            filter: brightness(0.9) saturate(0.8);
-        }
-
-        img:hover {
-            transform: scale(1.03) translateY(-5px); /* کمی بزرگ شدن و حرکت به بالا */
-            filter: brightness(1.05) saturate(1.1); /* روشن‌تر و زنده‌تر شدن رنگ‌ها */
-            box-shadow: 0 20px 40px rgba(0, 170, 255, 0.25); /* سایه رنگی و عمیق */
-        }
-
-        .highlight {
-            font-weight: 700;
-        }
-
-        .features {
-            background: rgba(255, 255, 255, 0.02);
             padding: 20px;
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+        
+        .feature-box:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: scale(1.02);
         }
 
-        /* انیمیشن آیتم‌های لیست ویژگی‌ها */
-        .features p {
-            margin: 8px 0;
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
             font-size: 1rem;
-            padding: 8px 12px;
-            border-radius: 8px;
-            /* انیمیشن بسیار نرم و فنری */
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, color 0.3s ease;
-            cursor: default;
         }
-        
-        /* حرکت تعاملی هنگام هاور روی ویژگی‌ها */
-        .features p:hover {
-            background: rgba(0, 170, 255, 0.15);
-            transform: translateX(-10px) scale(1.01); /* حرکت کوچک به چپ و بزرگ شدن */
-            color: #fff;
-            box-shadow: -5px 0 10px -5px rgba(0, 170, 255, 0.3);
+
+        .check-icon {
+            color: var(--accent);
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            /* چرخش و حرکت مداوم */
+            animation: pulseIcon 2s infinite;
         }
-        
-        /* رنگی کردن تیک‌ها */
-        .features p strong {
-            color: var(--accent-color);
-            margin-left: 5px;
+
+        @keyframes pulseIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); text-shadow: 0 0 8px var(--accent); }
+            100% { transform: scale(1); }
         }
-        
-        .footer-note {
-            text-align: center;
+
+        /* --- فوتر --- */
+        .footer {
             margin-top: 60px;
+            text-align: center;
             padding-top: 30px;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
+        
+        .glow-text {
+            color: var(--primary);
+            font-weight: bold;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
 
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(0, 210, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(0, 210, 255, 1); }
+        }
+
+        /* موبایل */
         @media (max-width: 768px) {
-            .container {
-                margin: 15px;
-                padding: 25px;
-            }
-            h1 { font-size: 1.6rem; }
-            h2 { font-size: 1.3rem; }
+            h1 { font-size: 1.8rem; }
+            .container { margin: 20px; padding: 25px; }
+            .orb { opacity: 0.4; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>الیپی | جایی که نوآوری و هوش مصنوعی در هم می‌آمیزند</h1>
-    
-    <p class="intro-text">در دنیایی که فناوری با سرعتی سرسام‌آور در حال پیشرفت است، الیپی به‌عنوان تیمی خلاق و نوآور در حوزه نرم‌افزار، مرزهای جدیدی از هوش مصنوعی و یادگیری ماشینی را فتح کرده است.</p>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-    <div class="anim-delay-1">
+    <div class="container">
+        <h1>الیپی | معماری آینده هوش مصنوعی</h1>
+        
+        <p>در دنیایی که فناوری با سرعتی سرسام‌آور در حال پیشرفت است، الیپی به‌عنوان تیمی خلاق و پیشرو، مرزهای جدیدی از هوش مصنوعی و یادگیری ماشینی را فتح کرده است.</p>
+
         <a href="https://elipideveloper.github.io/Amin_Assistant/" target="_blank">
-            <h2 class="highlight">🔹 دستیار صوتی امین | همراهی هوشمند</h2>
+            <h2 class="section-title">دستیار صوتی امین</h2>
         </a>
 
         <a href="https://elipideveloper.github.io/Amin_Assistant/" target="_blank">
-            <img src="ban.png" alt="دستیار صوتی امین">
+            <img src="ban.png" alt="دستیار صوتی امین" class="floating-img">
         </a>
 
-        <p>دستیار صوتی امین یک دستیار دیجیتال پیشرفته است که با بهره‌گیری از پردازش گفتار و درک زبان طبیعی، تجربه‌ای منحصربه‌فرد و کاملاً شخصی‌سازی‌شده را ارائه می‌دهد.</p>
+        <p>دستیار صوتی امین یک هوش دیجیتال پیشرفته است که با درک زبان طبیعی، تعاملی زنده را رقم می‌زند.</p>
         
-        <div class="features">
-            <p><strong>✔</strong> پردازش سریع و دقیق دستورات صوتی</p>
-            <p><strong>✔</strong> پشتیبانی کامل از زبان شیرین فارسی</p>
-            <p><strong>✔</strong> تعامل طبیعی و مکالمه‌ای هوشمند</p>
-            <p><strong>✔</strong> اتصال به سرویس‌های آنلاین برای اطلاعات لحظه‌ای</p>
+        <div class="feature-box">
+            <div class="feature-item"><span class="check-icon">✔</span> پردازش فوق‌سریع دستورات صوتی</div>
+            <div class="feature-item"><span class="check-icon">✔</span> مسلط به زبان فارسی</div>
+            <div class="feature-item"><span class="check-icon">✔</span> مکالمه‌ای هوشمند و طبیعی</div>
         </div>
-    </div>
 
-    <div class="anim-delay-2" style="margin-top: 50px;">
-        <h2 class="highlight">🔹 مترجم امین | ترجمه‌ای بی‌نقص و روان</h2>
-        <img src="ban2.png" alt="مترجم امین">
+        <a href="https://elipideveloper.github.io/Amin_Assistant/" target="_blank">
+            <h2 class="section-title">مترجم هوشمند امین</h2>
+        </a>
         
-        <p>مترجم امین یک شاهکار فناورانه در دنیای ترجمه ماشینی است که با استفاده از الگوریتم‌های پیشرفته هوش مصنوعی، متونی با دقتی خیره‌کننده ارائه می‌دهد.</p>
+        <img src="ban2.png" alt="مترجم امین" class="floating-img img-delay">
         
-        <div class="features">
-            <p><strong>✔</strong> ترجمه دقیق و بی‌نقص متون</p>
-            <p><strong>✔</strong> پشتیبانی از زبان‌های زنده دنیا</p>
-            <p><strong>✔</strong> درک هوشمند اصطلاحات تخصصی</p>
-            <p><strong>✔</strong> مناسب برای متون حقوقی، علمی و ادبی</p>
+        <p>مترجم امین، شاهکاری در درک معنایی متون و ترجمه دقیق با ظرافت‌های زبانی است.</p>
+        
+        <div class="feature-box">
+            <div class="feature-item"><span class="check-icon">✔</span> ترجمه تخصصی و معناگرا</div>
+            <div class="feature-item"><span class="check-icon">✔</span> پشتیبانی از تمام زبان‌های زنده</div>
+            <div class="feature-item"><span class="check-icon">✔</span> درک اصطلاحات پیچیده</div>
         </div>
-    </div>
 
-    <div class="footer-note anim-delay-3">
-        <h2 style="color: var(--accent-color); font-size: 1.5rem;">چرا الیپی؟</h2>
-        <p style="text-align: center; margin-top: 20px;">
-            الیپی فراتر از یک تیم توسعه‌دهنده است؛ ما معماران دنیای دیجیتال هستیم. جایی که فناوری و هوش مصنوعی در کنار خلاقیت، تجربه‌ای بی‌نظیر را خلق می‌کنند.
-        </p>
-        <p style="text-align: center; color: var(--primary-color); font-weight: bold; margin-top: 20px;">الیپی – جایی که فناوری، هوش و خلاقیت در هم می‌آمیزند!</p>
-    </div>
+        <div class="footer">
+            <h2 style="font-size: 1.5rem; color: #fff;">چرا الیپی؟</h2>
+            <p style="text-align: center;">ما کد نمی‌نویسیم، ما رویاهای دیجیتال را خلق می‌کنیم.</p>
+            <p class="glow-text">الیپی – تلاقی هوش، هنر و آینده</p>
+        </div>
 
-</div>
+    </div>
 
 </body>
 </html>
